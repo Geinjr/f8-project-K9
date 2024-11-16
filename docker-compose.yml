@@ -1,8 +1,6 @@
-#version: '3'
+version: '3'
 
 services:
-  #  db:
-
   api:
     container_name: k9-backend
     image: node:23.0.0
@@ -10,23 +8,20 @@ services:
     env_file:
       - .env
     volumes:
-      - './api:/app/api'
+      - './api:/app/api'  # Mount mã nguồn của backend
     ports:
-      - '3000:3000'
-    command: ['npm', 'run', 'start:dev']
-  #    command:
-  #      - npm
-  #      - run
-  #      - start
+      - '3000:3000'  # Truy cập API qua localhost:3000
+#    command: ['npm', 'run', 'start:dev']
+    command: ['echo', 'No API implemented yet']
 
   web:
-    container_name: k9-frontend
+    container_name: Team2_F8_Final-Project
     image: node:23.0.0
     working_dir: /app/web
     volumes:
-      - './web:/app/web'
+      - './web:/app/web'  # Mount mã nguồn của frontend
     ports:
-      - '5000:5173'
+      - '5000:3000'
     command: ['npm', 'run', 'dev']
 
   db:
@@ -37,9 +32,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=default
     ports:
-      - '4000:5432'
+      - '4000:5432'  # Truy cập PostgreSQL qua localhost:4000
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data  # Lưu trữ dữ liệu của PostgreSQL
 
 volumes:
   db:
